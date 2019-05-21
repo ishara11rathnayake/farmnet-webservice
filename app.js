@@ -2,9 +2,17 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
+
+//const password = "930713058ishara";
+
+mongoose.connect(
+  "mongodb+srv://ishara11rathnayake:930713058ishara@node-shop-socjh.mongodb.net/test?retryWrites=true",
+  { useNewUrlParser: true }
+);
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));

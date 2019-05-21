@@ -7,10 +7,11 @@ const mongoose = require("mongoose");
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
 
-//const password = "930713058ishara";
-
+const password = "930713058ishara";
 mongoose.connect(
-  "mongodb+srv://ishara11rathnayake:930713058ishara@node-shop-socjh.mongodb.net/test?retryWrites=true",
+  "mongodb+srv://ishara11rathnayake:" +
+    password +
+    "@node-shop-socjh.mongodb.net/test?retryWrites=true",
   { useNewUrlParser: true }
 );
 

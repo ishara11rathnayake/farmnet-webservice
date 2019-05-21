@@ -1,5 +1,5 @@
 {
   "env": {
-    "process.env.MONGO_ATLAS_PW": "930713058ish#"
+    "MONGO_ATLAS_PW": "930713058ishara"
   }
 }

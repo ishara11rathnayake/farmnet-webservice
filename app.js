@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
@@ -7,10 +8,9 @@ const mongoose = require("mongoose");
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
 
-const password = "930713058ishara";
 mongoose.connect(
   "mongodb+srv://ishara11rathnayake:" +
-    password +
+    process.env.MONGODB_PASSWORD +
     "@node-shop-socjh.mongodb.net/test?retryWrites=true",
   { useNewUrlParser: true }
 );

@@ -10,7 +10,7 @@ const orderRoutes = require("./api/routes/orders");
 
 mongoose.connect(
   "mongodb+srv://ishara11rathnayake:" +
-    process.env.MONGODB_PASSWORD +
+    process.env.MONGO_ATLAS_PW +
     "@node-shop-socjh.mongodb.net/test?retryWrites=true",
   { useNewUrlParser: true }
 );

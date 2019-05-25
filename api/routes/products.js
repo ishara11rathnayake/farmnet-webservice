@@ -31,8 +31,6 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-const Product = require("../models/product");
-
 router.get("/", ProductController.products_get_all);
 
 router.post(

@@ -15,6 +15,7 @@ mongoose.connect(
     "@node-shop-socjh.mongodb.net/test?retryWrites=true",
   { useNewUrlParser: true }
 );
+mongoose.set("useCreateIndex", true);
 
 app.use(morgan("dev"));
 app.use("/uploads", express.static("uploads"));

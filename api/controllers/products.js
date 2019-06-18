@@ -1,18 +1,23 @@
 const Product = require("../models/product");
 const mongoose = require("mongoose");
+const User = require("../models/user");
 
 exports.products_get_all = (req, res, next) => {
   Product.find()
-    .select("name price _id productImage")
+    .select("user name price _id productImage amount description")
+    .populate("user", "email")
     .exec()
     .then(docs => {
       const response = {
         count: docs.length,
         products: docs.map(doc => {
           return {
+            _id: doc._id,
             name: doc.name,
             price: doc.price,
-            _id: doc._id,
+            amount: doc.amount,
+            description: doc.description,
+            user: doc.user,
             productImage: doc.productImage,
             request: {
               type: "GET",
@@ -38,17 +43,25 @@ exports.products_get_all = (req, res, next) => {
 };
 
 exports.products_create_product = (req, res, next) => {
-  console.log(req.file);
-  const product = new Product({
-    _id: new mongoose.Types.ObjectId(),
-    name: req.body.name,
-    price: req.body.price,
-    productImage: req.file.path
-  });
-  product
-    .save()
+  User.findById(req.body.userId)
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found"
+        });
+      }
+      const product = new Product({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        price: req.body.price,
+        amount: req.body.amount,
+        description: req.body.description,
+        user: req.body.userId,
+        productImage: req.file.path
+      });
+      return product.save();
+    })
     .then(result => {
-      console.log(result);
       res.status(201).json({
         message: "Created product succesfully",
         createdProduct: {
@@ -71,7 +84,7 @@ exports.products_create_product = (req, res, next) => {
 exports.products_get_product = (req, res, next) => {
   const id = req.params.productId;
   Product.findById(id)
-    .select("name price _id")
+    .select("name price _id amount description")
     .exec()
     .then(doc => {
       console.log(doc);

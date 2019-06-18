@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
 const userRoutes = require("./api/routes/user");
+const likeRoutes = require("./api/routes/likes");
+const commentRoutes = require("./api/routes/comments");
 
 mongoose.connect(
   "mongodb+srv://ishara11rathnayake:" +
@@ -38,6 +40,8 @@ app.use((req, res, next) => {
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/user", userRoutes);
+app.use("/likes", likeRoutes);
+app.use("/comments", commentRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

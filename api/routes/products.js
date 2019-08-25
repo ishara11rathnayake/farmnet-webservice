@@ -2,15 +2,20 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const checkAuth = require("../middleware/check-auth");
+const multerGoogleStorage = require("multer-google-storage");
 
 const ProductController = require("../controllers/products");
 
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "./uploads/");
-  },
+const storage = multerGoogleStorage.storageEngine({
   filename: function(req, file, cb) {
-    cb(null, Date.now() + file.originalname);
+    cb(null, "product/" + Date.now() + file.originalname);
+  },
+  bucket: "farmnet-bucket",
+  projectId: "farmnet",
+  keyFilename: "./api/helpers/farmnet-45e7c587b679.json",
+  acl: "publicread",
+  contentType: function(req, file) {
+    return file.mimetype;
   }
 });
 

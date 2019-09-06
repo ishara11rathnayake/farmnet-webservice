@@ -22,14 +22,16 @@ exports.user_signup = (req, res, next) => {
             const user = new User({
               _id: new mongoose.Types.ObjectId(),
               email: req.body.email,
-              password: hash
+              password: hash,
+              user_type: req.body.user_type
             });
             user
               .save()
               .then(result => {
                 console.log(result);
                 res.status(201).json({
-                  message: "User created"
+                  message: "User created",
+                  userId: user._id
                 });
               })
               .catch(err => {
@@ -72,6 +74,7 @@ exports.user_login = (req, res, next) => {
             }
           );
           return res.status(200).json({
+            userId: user[0]._id,
             message: "Auth successful",
             token: token
           });

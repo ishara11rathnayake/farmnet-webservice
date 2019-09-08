@@ -25,13 +25,26 @@ exports.user_signup = (req, res, next) => {
               password: hash,
               user_type: req.body.user_type
             });
+
+            const token = jwt.sign(
+              {
+                email: user.email,
+                userId: user._id
+              },
+              process.env.JWT_KEY,
+              {
+                expiresIn: "1h"
+              }
+            );
+
             user
               .save()
               .then(result => {
                 console.log(result);
                 res.status(201).json({
                   message: "User created",
-                  userId: user._id
+                  userId: user._id,
+                  token: token
                 });
               })
               .catch(err => {

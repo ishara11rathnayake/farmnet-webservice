@@ -4,7 +4,7 @@ const User = require("../models/user");
 
 exports.products_get_all = (req, res, next) => {
   Product.find()
-    .select("user name price _id productImage amount description")
+    .select("user name price _id productImage amount description location")
     .populate("user", "email")
     .exec()
     .then(docs => {
@@ -17,6 +17,7 @@ exports.products_get_all = (req, res, next) => {
             price: doc.price,
             amount: doc.amount,
             description: doc.description,
+            location: doc.location,
             user: doc.user,
             productImage: doc.productImage,
             request: {
@@ -55,6 +56,7 @@ exports.products_create_product = (req, res, next) => {
         name: req.body.name,
         price: req.body.price,
         amount: req.body.amount,
+        location: req.body.location,
         description: req.body.description,
         user: req.body.userId,
         productImage: req.file.path
@@ -84,7 +86,7 @@ exports.products_create_product = (req, res, next) => {
 exports.products_get_product = (req, res, next) => {
   const id = req.params.productId;
   Product.findById(id)
-    .select("name price _id amount description")
+    .select("name price _id amount description location")
     .exec()
     .then(doc => {
       console.log(doc);

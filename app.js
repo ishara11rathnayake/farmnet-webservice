@@ -11,6 +11,7 @@ const userRoutes = require("./api/routes/user");
 const likeRoutes = require("./api/routes/likes");
 const commentRoutes = require("./api/routes/comments");
 
+//connect to mongoDB
 mongoose.connect(
   "mongodb+srv://ishara11rathnayake:" +
     process.env.MONGO_ATLAS_PW +
